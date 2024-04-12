@@ -42,6 +42,8 @@ class MyLineReg:
                 array_ones = np.ones((X_new.shape[0], 1))
                 X_new = np.hstack([array_ones, X_new])
                 y_predict = X_new @ self.weights
+                # print(y_predict.shape)
+                # print(y.shape)
                 self.gradient_descent(X_new, y_predict, y_new)
             else:
                 y_predict = X @ self.weights
@@ -106,14 +108,3 @@ class MyLineReg:
     def mean_absolute_percentage_error(self, y_true, predict):
         MAPE = (100 * abs((y_true - predict) / y_true).sum()) / len(y_true)
         return MAPE
-
-
-l = MyLineReg(sgd_sample=0.1)
-
-from sklearn.datasets import make_regression
-
-X, y = make_regression(n_samples=1000, n_features=14, n_informative=10, noise=15, random_state=42)
-X = pd.DataFrame(X)
-y = pd.Series(y)
-X.columns = [f'col_{col}' for col in X.columns]
-l.fit(X, y)
